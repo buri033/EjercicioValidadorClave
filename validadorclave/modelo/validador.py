@@ -20,11 +20,13 @@ class ReglaValidacion(ABC):
             return False
         if len(clave) >= self._longitud_esperada:
             return True
+
     def _contiene_mayuscula(self, clave: str):
         return any(c.isupper() for c in clave)
 
     def _contiene_minuscula(self, clave: str):
         return any(c.islower() for c in clave)
+
 
     def _contiene_numero(self, clave: str):
         return any(c.isdigit() for c in clave)
@@ -44,11 +46,11 @@ class ReglaValidacionGanimedes(ReglaValidacion):
 
     def es_valida(self, clave) -> bool:
         if not self._validar_longitud(clave):
-            return False
+            raise NoCumpleLongitudMinimaError(f"La clave debe tener una longitud de más de {self._longitud_esperada} caracteres")
         if not self._contiene_mayuscula(clave):
-            return False
+            raise NoTieneLetraMayusculaError("La clave debe contener al menos una letra mayúscula")
         if not self._contiene_numero(clave):
-            return False
+            raise NoTieneNumeroError("La clave debe contener al menos un número")
         if not self.contiene_caracter_especial(clave):
             return False
         return True
@@ -64,8 +66,9 @@ class ReglaValidacionCalisto(ReglaValidacion):
             return False
         calisto_index = clave_lower.index('calisto')
         calisto_word = clave[calisto_index:calisto_index + 7]
-        if calisto_word.isupper() or calisto_word.islower():
-            return False
+        mayuscula = sum(1 for c in calisto_word if c.isupper())
+        return 2 <= mayuscula < 7
+
 
     def es_valida(self, clave):
         self._validar_longitud(clave)
