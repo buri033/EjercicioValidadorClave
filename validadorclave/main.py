@@ -1,5 +1,6 @@
 from validadorclave.modelo.validador import ReglaValidacionGanimedes, ReglaValidacionCalisto, Validador
 
+
 def validar_clave(clave, reglas):
     for regla in reglas:
         validador = Validador(regla)

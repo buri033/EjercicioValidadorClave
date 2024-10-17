@@ -1,5 +1,5 @@
 # TODO: Implementa el código del ejercicio aquí
-# validador.py
+
 from abc import ABC, abstractmethod
 from .errores import (
     NoCumpleLongitudMinimaError,
